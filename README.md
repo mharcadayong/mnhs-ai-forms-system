@@ -32,16 +32,28 @@ Create a `.env` file based on `.env.example` and set required variables:
 Run migrations and start
 
 ```bash
-# from repo root, adjust if manage.py is inside backend/
+# If a Django manage.py exists at the repository root:
 python manage.py migrate
 python manage.py runserver
+
+# If manage.py is inside the `backend/` package, run:
+python backend/manage.py migrate
+python backend/manage.py runserver
 ```
 
-If manage.py is under `backend/`, run `python backend/manage.py` instead.
+I inspected the repository and could not find a top-level `manage.py` file. If your Django project entrypoint lives in a different path, replace the command above with the correct relative path (for example `python path/to/manage.py ...`). If you don't yet have a `manage.py`, you can create one by running `django-admin startproject <project_name> .` from within the `backend/` directory and moving the apps into the created project.
+
+Settings module
+
+If your project uses a custom settings module, set the `DJANGO_SETTINGS_MODULE` environment variable or edit `manage.py` to point at the correct settings. Example:
+
+```bash
+export DJANGO_SETTINGS_MODULE=backend.settings
+```
 
 ## Development
 
-- Tests: `python manage.py test`
+- Tests: `python manage.py test` (or `python backend/manage.py test`)
 - Create superuser: `python manage.py createsuperuser`
 
 ## Contributing
